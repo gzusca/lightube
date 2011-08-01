@@ -5,6 +5,14 @@
   <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 </head>
 <body>
-
+  <div id="display"></div>
+  <script type="text/javascript">
+    $.get('tmp/videos.xml', function(data) {
+      $(data).find('entry').each(function(index, item) {
+        var img_url = $($(item).find('media\\:group media\\:thumbnail')[2]).attr('url');
+	$('#display').append('<img src="' + img_url + '" width="120" /> ');
+      });
+    });
+  </script>
 </body>
 </html>
