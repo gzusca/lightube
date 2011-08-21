@@ -5,20 +5,30 @@
   <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 </head>
 <body>
-  <iframe id="player" width="480" height="360" src="http://www.youtube.com/v/8biFUBbCcEg?f=videos&app=youtube_gdata" frameborder="0" allowfullscreen></iframe>
+  <iframe id="player" width="480" height="360" src="http://www.youtube.com/embed/8biFUBbCcEg" frameborder="0" allowfullscreen></iframe>
   <div id="videos-list" style="max-width: 650px;"></div>
   <script type="text/javascript">
     $.get('tmp/videos.xml', function(data) {
       $(data).find('entry').each(function(index, item) {
-        var flash_url = $(item).find('media\\:content[type="application/x-shockwave-flash"]').attr('url');
+        var video_id = $(item).children('id').text().match(/[\w]+$/i);
         var img_url = $($(item).find('media\\:group media\\:thumbnail')[2]).attr('url');
-        var img = $('<img src="' + img_url + '" width="120" data-flash-url="' + flash_url + '" /> ');
+	var title_text = $(item).children('title').text();
+        var img = $('<img src="' + img_url + '" width="120" data-video-id="' + video_id + '" /> ');
         img.click(function() {
-          $('#player').attr('src', $(this).data('flash-url'));
+          $('#player').attr('src', "http://www.youtube.com/embed/" + $(this).data('video-id'));
         });
-        img.attr('title', $(item).children('title').text());
+        img.attr('title', title_text);
         img.css('cursor', 'pointer');
-        $('#videos-list').append(img).append(' ');
+
+        var div = $('<div style=":; :"></div>')
+        div.css('width', '120px');
+        div.css('height', '240px');
+        div.css('display', 'inline-block');
+        div.css('overflow', 'hidden');
+        div.css('cursor', 'pointer');
+	div.append(img).append('<div>' + title_text + '</div>');
+
+        $('#videos-list').append(div).append(' ');
       });
     });
   </script>
