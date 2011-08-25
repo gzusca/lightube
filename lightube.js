@@ -6,10 +6,6 @@ $('.videos').each(function(index, videos) {
       var img_url = item.media$group.media$thumbnail[2].url;
       var title_text = item.title.$t;
       var img = $('<img src="' + img_url + '" width="120" data-video-id="' + video_id + '" /> ');
-
-      img.click(function() {
-	$('#player').attr('src', "http://www.youtube.com/embed/" + $(this).data('video-id'));
-      });
       img.attr('title', title_text);
       img.css('cursor', 'pointer');
 
@@ -20,6 +16,12 @@ $('.videos').each(function(index, videos) {
       div.css('overflow', 'hidden');
       div.css('cursor', 'pointer');
       div.append(img).append('<div>' + title_text + '</div>');
+
+      div.click(function() {
+	$('#player').attr('src', "http://www.youtube.com/embed/" + $(this).find('img').data('video-id'));
+	$('body').scrollTop($('#player').scrollTop());
+	return false;
+      });
 
       $(videos).append(div).append(' ');
     });
