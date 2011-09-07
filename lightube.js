@@ -19,7 +19,7 @@ $('.videos').each(function(index, videos) {
 
       div.click(function() {
 	$('#player').attr('src', "http://www.youtube.com/embed/" + $(this).find('img').data('video-id'));
-	$('body').scrollTop($('#player').scrollTop());
+	$(window).scrollTop($('#player').position().top);
 	return false;
       });
 
