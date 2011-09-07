@@ -11,7 +11,7 @@ $('.videos').each(function(index, videos) {
 
       var div = $('<div></div>')
       div.css('width', '120px');
-      //div.css('height', '240px');
+      div.css('margin-top', '30px');
       div.css('display', 'inline-block');
       div.css('overflow', 'hidden');
       div.css('cursor', 'pointer');
